@@ -1,0 +1,41 @@
+{
+  "id": "roll-messages-dnd5e",
+  "title": "Roll Messages for D&D 5e",
+  "description": "Connects Roll Messages to the D&D 5e roll dialogs: notes for attack, damage, check, save and initiative rolls, narrowed by ability, skill, tool or action type, with clickable bonuses that go into the situational bonus.",
+  "version": "2.0.0",
+  "authors": [
+    { "name": "Slam Hammerfist" }
+  ],
+  "url": "https://github.com/SlamHammerfist/Roll-Messages-DnD5e",
+  "manifest": "https://github.com/SlamHammerfist/Roll-Messages-DnD5e/releases/latest/download/module.json",
+  "download": "https://github.com/SlamHammerfist/Roll-Messages-DnD5e/releases/download/v2.0.0/module.zip",
+  "bugs": "https://github.com/SlamHammerfist/Roll-Messages-DnD5e/issues",
+  "readme": "https://github.com/SlamHammerfist/Roll-Messages-DnD5e/blob/main/README.md",
+  "changelog": "https://github.com/SlamHammerfist/Roll-Messages-DnD5e/blob/main/CHANGELOG.md",
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14"
+  },
+  "relationships": {
+    "systems": [
+      {
+        "id": "dnd5e",
+        "type": "system",
+        "compatibility": { "minimum": "6.0.0" }
+      }
+    ],
+    "requires": [
+      {
+        "id": "roll-messages",
+        "type": "module",
+        "compatibility": { "minimum": "2.0.0" }
+      }
+    ]
+  },
+  "esmodules": [
+    "scripts/roll-messages-dnd5e.mjs"
+  ],
+  "styles": [
+    "styles/roll-messages-dnd5e.css"
+  ]
+}

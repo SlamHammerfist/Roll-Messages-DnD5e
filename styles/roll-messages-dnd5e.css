@@ -1,0 +1,5 @@
+/* Roll Messages for D&D 5e: use the dnd5e gold and success colours. */
+.roll-configuration .rm-messages {
+  --rm-accent: var(--dnd5e-color-gold, #9f9275);
+  --rm-active: var(--dnd5e-color-success, #18520b);
+}
