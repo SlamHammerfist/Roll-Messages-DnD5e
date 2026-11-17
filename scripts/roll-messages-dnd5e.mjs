@@ -4,6 +4,9 @@
  * each dialog is rolling, puts the Messages box above the dialog's configuration section, and
  * adds clicked bonuses to the first roll's situational bonus.
  *
+ * A change's own Conditions (dnd5e change conditions) are checked against the dialog's roll data,
+ * so roll.* keys such as roll.item.properties or roll.attack.type can narrow a message down.
+ *
  * Roll types: attack, damage, check, save, initiative (or init), all.
  * Tags:       ability (str, dex...), skill (ste, prc...), tool (thief...), death, concentration,
  *             and for attacks and damage: action type (mwak, rwak, msak, rsak), item type
@@ -21,7 +24,8 @@ Hooks.once("rollMessages.ready", api => {
       if ( anchor ) anchor.before(box);
       else (element.querySelector("form") ?? element).append(box);
     },
-    bonus: api.formulaFieldBonus(element => element.querySelector("input[name='roll.0.situational']"))
+    bonus: api.formulaFieldBonus(element => element.querySelector("input[name='roll.0.situational']")),
+    condition: checkConditions
   });
 });
 
@@ -75,6 +79,22 @@ function toolLabel(id) {
 /* -------------------------------------------- */
 
 /**
+ * Check a message's change conditions against the roll being configured.
+ * @param {object} message  From the hub, with the effect and change it came from.
+ * @param {object} roll     RollInfo from describeRoll.
+ * @returns {boolean}
+ */
+function checkConditions(message, roll) {
+  const conditions = message.change?.conditions;
+  if ( typeof conditions?.check !== "function" ) return true;
+  const base = roll.rollData ?? roll.actor.getRollData();
+  const data = message.effect?.getRuleConditionData?.(base) ?? base;
+  return conditions.check(data) !== false;
+}
+
+/* -------------------------------------------- */
+
+/**
  * Work out what a dnd5e roll dialog is rolling, from its hook names and subject.
  * @param {object} config  The dialog's roll process config.
  * @returns {object|null}  RollInfo for the hub.
@@ -122,5 +142,7 @@ function describeRoll(config) {
     type = "check";
     add(config.ability, config.skill, config.tool);
   }
-  return type ? { actor, type, tags, aliases: { init: "initiative" } } : null;
+  if ( !type ) return null;
+  const rollData = config.rolls?.[0]?.data ?? actor.getRollData();
+  return { actor, type, tags, aliases: { init: "initiative" }, rollData };
 }

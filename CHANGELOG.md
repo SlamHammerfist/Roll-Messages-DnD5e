@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.2.0
+
+- A change's own Conditions are checked against the roll in the dialog, so `roll.*` keys (item
+  properties, attack type, ability, ...) can narrow a message down.
+
 ## 2.1.0
 
 - With [Effect Select](https://github.com/SlamHammerfist/effect-select) active, the Roll Messages

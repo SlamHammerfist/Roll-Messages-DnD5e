@@ -24,6 +24,21 @@ With [Effect Select](https://github.com/SlamHammerfist/effect-select) active, th
 the Attribute Key dropdown: type `roll` or e.g. `save dex` to find them. Item and activity type
 tags aren't listed but can still be typed.
 
+## Conditions
+
+A change's own **Conditions** (the filter button next to the change) are checked against the roll
+in the dialog, so you can use `roll.*` keys as well as actor data and statuses. For example, a
+message only for finesse or ranged weapons:
+
+```json
+{ "o": "OR", "v": [
+  { "k": "roll.item.properties", "o": "has", "v": "fin" },
+  { "k": "roll.attack.type", "v": "ranged" }
+] }
+```
+
+Effect-wide conditions still work too, but can't use `roll.*` keys.
+
 ## Clickable bonuses
 
 `@Bonus[formula]{Name}` in a message adds `formula[Name]` to the roll's situational bonus when
@@ -37,4 +52,4 @@ Example: key `flags.roll-messages.save.dex`, value
 
 - Foundry VTT v14
 - D&D 5e system 6.0 or later
-- Roll Messages 2.0.0 or later
+- Roll Messages 2.1.0 or later

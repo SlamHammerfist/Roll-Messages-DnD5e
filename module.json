@@ -2,13 +2,13 @@
   "id": "roll-messages-dnd5e",
   "title": "Roll Messages for D&D 5e",
   "description": "Connects Roll Messages to the D&D 5e roll dialogs: notes for attack, damage, check, save and initiative rolls, narrowed by ability, skill, tool or action type, with clickable bonuses that go into the situational bonus.",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "authors": [
     { "name": "Slam Hammerfist" }
   ],
   "url": "https://github.com/SlamHammerfist/Roll-Messages-DnD5e",
   "manifest": "https://github.com/SlamHammerfist/Roll-Messages-DnD5e/releases/latest/download/module.json",
-  "download": "https://github.com/SlamHammerfist/Roll-Messages-DnD5e/releases/download/v2.1.0/module.zip",
+  "download": "https://github.com/SlamHammerfist/Roll-Messages-DnD5e/releases/download/v2.2.0/module.zip",
   "bugs": "https://github.com/SlamHammerfist/Roll-Messages-DnD5e/issues",
   "readme": "https://github.com/SlamHammerfist/Roll-Messages-DnD5e/blob/main/README.md",
   "changelog": "https://github.com/SlamHammerfist/Roll-Messages-DnD5e/blob/main/CHANGELOG.md",
@@ -28,7 +28,7 @@
       {
         "id": "roll-messages",
         "type": "module",
-        "compatibility": { "minimum": "2.0.0" }
+        "compatibility": { "minimum": "2.1.0" }
       }
     ],
     "recommends": [
