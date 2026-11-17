@@ -20,6 +20,10 @@ Add tags after the type to narrow it down. The message shows only when the roll 
 
 Skill and tool rolls count as checks. Initiative only matches `initiative` and `all`.
 
+With [Effect Select](https://github.com/SlamHammerfist/effect-select) active, these keys show up in
+the Attribute Key dropdown: type `roll` or e.g. `save dex` to find them. Item and activity type
+tags aren't listed but can still be typed.
+
 ## Clickable bonuses
 
 `@Bonus[formula]{Name}` in a message adds `formula[Name]` to the roll's situational bonus when

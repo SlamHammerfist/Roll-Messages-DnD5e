@@ -25,6 +25,55 @@ Hooks.once("rollMessages.ready", api => {
   });
 });
 
+/* -------------------------------------------- */
+/*  Effect Select                               */
+/* -------------------------------------------- */
+
+/**
+ * List the Roll Messages keys in Effect Select's Attribute Key dropdown.
+ * Covers every type, plus the tags that come from dnd5e config (abilities, skills, tools,
+ * action types, attack modes). Item and activity type tags can still be typed by hand.
+ */
+Hooks.on("effectSelect.keys", (keys, { documentName }) => {
+  if ( (documentName !== "Actor") || (game.system.id !== "dnd5e") ) return;
+  const cfg = CONFIG.DND5E;
+  const group = game.modules.get("roll-messages")?.title ?? "Roll Messages";
+  const loc = value => game.i18n.localize((typeof value === "string") ? value : (value?.label ?? ""));
+  const add = (path, ...labels) => keys.push({
+    key: `flags.roll-messages.${path}`, group, label: [group, ...labels].filter(Boolean).join(" › ")
+  });
+
+  const types = {
+    all: "All Rolls", attack: "Attack Roll", damage: "Damage Roll",
+    check: "Ability Check", save: "Saving Throw", initiative: "Initiative"
+  };
+  for ( const [type, label] of Object.entries(types) ) add(type, label);
+
+  for ( const [id, ability] of Object.entries(cfg.abilities ?? {}) ) {
+    for ( const type of ["check", "save", "attack"] ) add(`${type}.${id}`, types[type], loc(ability));
+  }
+  for ( const [id, skill] of Object.entries(cfg.skills ?? {}) ) add(`check.${id}`, types.check, loc(skill));
+  for ( const id of Object.keys(cfg.tools ?? {}) ) add(`check.${id}`, types.check, toolLabel(id));
+  add("save.death", types.save, "Death Save");
+  add("save.concentration", types.save, "Concentration");
+
+  for ( const type of ["attack", "damage"] ) {
+    for ( const [id, label] of Object.entries(cfg.itemActionTypes ?? {}) ) add(`${type}.${id}`, types[type], loc(label));
+    for ( const [id, mode] of Object.entries(cfg.attackModes ?? {}) ) add(`${type}.${id}`, types[type], loc(mode));
+  }
+});
+
+/** Tool name from its base item, falling back to the id. */
+function toolLabel(id) {
+  try {
+    const label = dnd5e.documents.Trait.keyLabel(`tool:${id}`, { trait: "tool" });
+    if ( label && (label !== id) ) return label;
+  } catch {}
+  return id;
+}
+
+/* -------------------------------------------- */
+
 /**
  * Work out what a dnd5e roll dialog is rolling, from its hook names and subject.
  * @param {object} config  The dialog's roll process config.
